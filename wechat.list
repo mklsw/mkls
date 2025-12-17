@@ -1,0 +1,201 @@
+#!name=WeChat新加坡优化增强
+#!desc=解决WeChat新加坡账号在中国大陆使用转圈/缓慢问题，含DNS优化、广告过滤、外部链接解锁
+#!author=junwu
+#!icon=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Weixin.png
+#!date=2025-12-17
+
+# ============================================
+# 参考资料：
+# 1. https://linux.do/t/topic/312080 (微信代理优化)
+# 2. https://github.com/blackmatrix7/ios_rule_script/blob/master/rule/Surge/WeChat/WeChat.list
+# 3. https://raw.githubusercontent.com/NobyDa/Script/master/Surge/WeChat.list
+# ============================================
+
+[General]
+force-http-engine-hosts = %APPEND% *.weixin.qq.com, *.wechat.com, *.tenpay.com
+
+[Host]
+# === 腾讯公共DNS优化 ===
+*.tencent.com = server:https://doh.pub/dns-query
+*.qq.com = server:https://doh.pub/dns-query
+*.qlogo.cn = server:https://doh.pub/dns-query
+*.qpic.cn = server:https://doh.pub/dns-query
+*.weixin.qq.com = server:https://doh.pub/dns-query
+*.wx.qq.com = server:https://doh.pub/dns-query
+*.weixin.com = server:https://doh.pub/dns-query
+*.weixinbridge.com = server:https://doh.pub/dns-query
+*.wechat.com = server:https://doh.pub/dns-query
+*.servicewechat.com = server:https://doh.pub/dns-query
+*.gtimg.cn = server:https://doh.pub/dns-query
+
+[Rule]
+# ============================================
+# 核心规则：新加坡/香港WeChat域名走新加坡节点
+# 这是解决"转圈"问题的关键
+# ============================================
+DOMAIN,sgminorshort.wechat.com,新加坡节点
+DOMAIN,sglong.wechat.com,新加坡节点
+DOMAIN,sgshort.wechat.com,新加坡节点
+DOMAIN,sgshort.pay.wechat.com,新加坡节点
+DOMAIN,sgaxshort.wechat.com,新加坡节点
+DOMAIN,sgfindershort.wechat.com,新加坡节点
+DOMAIN-SUFFIX,support.wechat.com,新加坡节点
+DOMAIN-SUFFIX,wechatos.net,新加坡节点
+
+# 香港WeChat域名也走新加坡节点
+DOMAIN,hk.wechat.com,新加坡节点
+DOMAIN-SUFFIX,hkshort.wechat.com,新加坡节点
+
+# ============================================
+# 广告过滤
+# ============================================
+DOMAIN-SUFFIX,wxs.qq.com,REJECT
+DOMAIN,wxsnsdy.wxs.qq.com,REJECT
+DOMAIN,wxsmsdy.video.qq.com,REJECT
+DOMAIN,wxsnsdythumb.wxs.qq.com,REJECT
+DOMAIN,ads-shopping.shouqianba.com,REJECT
+DOMAIN,ad.maoyan.com,REJECT
+DOMAIN,e.jparking.cn,REJECT
+
+# ============================================
+# 支付相关（必须直连）
+# ============================================
+DOMAIN-KEYWORD,wechatpay,DIRECT
+DOMAIN,epay.ahrcu.com,DIRECT
+DOMAIN,mixpay.wechat.com,DIRECT
+DOMAIN-SUFFIX,tenpay.com,DIRECT
+DOMAIN-SUFFIX,wechatpay.com,DIRECT
+
+# ============================================
+# 微信核心服务（直连）
+# ============================================
+DOMAIN-SUFFIX,weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,wx.qq.com,DIRECT
+DOMAIN-SUFFIX,wxs.qq.com,DIRECT
+DOMAIN-SUFFIX,weixinbridge.com,DIRECT
+DOMAIN-SUFFIX,weixinsxy.com,DIRECT
+DOMAIN-SUFFIX,weixin.com,DIRECT
+
+# 国内深圳节点
+DOMAIN-SUFFIX,szsupport.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,szaxshort.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,szquic.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,szlong.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,szextshort.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,szminorlong.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,szfindershort.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,szshort.pay.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,szshort.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,szminorshort.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,szdisas.weixin.qq.com,DIRECT
+
+# 国内上海节点
+DOMAIN-SUFFIX,shshort.pay.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,shminorlong.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,shextshort.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,shquic.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,shdisas.weixin.qq.com,DIRECT
+
+# 香港节点（微信国内版，直连）
+DOMAIN-SUFFIX,hksupport.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,hkextshort.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,hkshort.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,hkaxshort.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,hkdisas.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,hkshort.pay.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,hklong.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,hkminorshort.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,hkquic.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,hkfindershort.weixin.qq.com,DIRECT
+
+# ============================================
+# 媒体资源（直连保速度）
+# ============================================
+DOMAIN-SUFFIX,wxsnsdyvip.wxs.qq.com,DIRECT
+DOMAIN-SUFFIX,qlogo.cn,DIRECT
+DOMAIN-SUFFIX,qpic.cn,DIRECT
+DOMAIN-SUFFIX,gtimg.com,DIRECT
+DOMAIN-SUFFIX,wx.gtimg.com,DIRECT
+DOMAIN-SUFFIX,vweixinthumb.tc.qq.com,DIRECT
+DOMAIN,snsvideo.c2c.wechat.com,DIRECT
+DOMAIN,socwxsns.video.qq.com,DIRECT
+DOMAIN,mmsns.qpic.cn,DIRECT
+DOMAIN,shmmsns.qpic.cn,DIRECT
+DOMAIN,szmmsns.qpic.cn,DIRECT
+DOMAIN,wx.qlogo.cn,DIRECT
+DOMAIN,shp.qlogo.cn,DIRECT
+DOMAIN,emoji.qpic.cn,DIRECT
+
+# ============================================
+# DNS服务（直连）
+# ============================================
+DOMAIN,dns.weixin.qq.com,DIRECT
+DOMAIN-SUFFIX,dns.pub,DIRECT
+DOMAIN-SUFFIX,dnsv4.com,DIRECT
+DOMAIN-SUFFIX,dnsv6.com,DIRECT
+
+# ============================================
+# 地图服务（直连）
+# ============================================
+DOMAIN-SUFFIX,map.qq.com,DIRECT
+DOMAIN-SUFFIX,lbs.gtimg.com,DIRECT
+
+# ============================================
+# 腾讯基础服务（直连）
+# ============================================
+DOMAIN,apd-pcdnwxlogin.teg.tencent-cloud.net,DIRECT
+DOMAIN,btrace.qq.com,DIRECT
+DOMAIN,soup.v.qq.com,DIRECT
+DOMAIN,dldir1.qq.com,DIRECT
+DOMAIN,wup.imtt.qq.com,DIRECT
+DOMAIN,c6.y.qq.com,DIRECT
+DOMAIN,vweixinf.tc.qq.com,DIRECT
+DOMAIN,weixin110.qq.com,DIRECT
+DOMAIN-SUFFIX,iot-tencent.com,DIRECT
+DOMAIN-SUFFIX,servicewechat.com,DIRECT
+
+# 小程序优化
+DOMAIN-KEYWORD,wxapp,DIRECT
+DOMAIN-KEYWORD,wxfile,DIRECT
+DOMAIN-KEYWORD,wxmini,DIRECT
+
+# User-Agent 规则
+USER-AGENT,MicroMessenger*,DIRECT
+USER-AGENT,WeChat*,新加坡节点
+
+# ============================================
+# IP网段规则
+# ============================================
+# 新加坡节点（代理）
+IP-CIDR,43.160.144.0/20,新加坡节点,no-resolve
+IP-CIDR,54.254.0.0/16,新加坡节点,no-resolve
+
+# 中国内地网段（直连）
+IP-CIDR,101.32.104.0/24,DIRECT,no-resolve
+IP-CIDR,101.32.118.0/24,DIRECT,no-resolve
+IP-CIDR,101.32.133.0/24,DIRECT,no-resolve
+IP-CIDR,129.226.3.0/24,DIRECT,no-resolve
+IP-CIDR,129.226.107.0/24,DIRECT,no-resolve
+
+# IPv6网段（直连）
+IP-CIDR6,2408:80F1:21::/48,DIRECT,no-resolve
+IP-CIDR6,2409:8C1E:8FD0::/56,DIRECT,no-resolve
+IP-CIDR6,240E:E1:A900::/48,DIRECT,no-resolve
+
+# ASN规则
+IP-ASN,132203,新加坡节点,no-resolve
+
+[URL Rewrite]
+# 交通银行小程序开屏广告
+^https:\/\/creditcardapp\.bankcomm\.com\/cnsvPmpaMdbcardWeb\/page\/getGuidePageAds - reject
+# 招行首页横幅广告
+^https:\/\/mbmodule-openapi\.paas\.cmbchina\.com\/graphic\/v2\/module\/graphic - reject
+# 公众号推广内容
+^https:\/\/mp\.weixin\.qq\.com\/mp\/(cps_product_info|getappmsgad|jsmonitor|masonryfeed|relatedarticle)\? - reject-dict
+
+[Script]
+# 微信外部链接解锁
+http-response ^https\:\/\/(weixin110\.qq|security.wechat)\.com\/cgi-bin\/mmspamsupport-bin\/newredirectconfirmcgi\? script-path=https://kelee.one/Resource/Script/Weixin/Weixin_external_links_unlock.js, requires-body=true, tag=微信外部链接解锁
+
+[MITM]
+hostname = %APPEND% weixin110.qq.com, security.wechat.com, mp.weixin.qq.com, *.weixin.qq.com, *.wechat.com

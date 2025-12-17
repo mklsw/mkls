@@ -1,8 +1,11 @@
-#!name=WeChat新加坡优化增强
+#!name=WeChat国际版优化
 #!desc=解决WeChat新加坡账号在中国大陆使用转圈/缓慢问题，含DNS优化、广告过滤、外部链接解锁
 #!author=junwu
 #!icon=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Weixin.png
 #!date=2025-12-17
+
+#!arguments=PROXY_NAME:WeChat代理
+#!arguments-desc=PROXY_NAME: 用于WeChat海外节点的代理名称，可改为你的节点名或策略组名
 
 # ============================================
 # 参考资料：
@@ -10,6 +13,10 @@
 # 2. https://github.com/blackmatrix7/ios_rule_script/blob/master/rule/Surge/WeChat/WeChat.list
 # 3. https://raw.githubusercontent.com/NobyDa/Script/master/Surge/WeChat.list
 # ============================================
+
+[Proxy Group]
+# 用户可选择的WeChat代理策略组
+WeChat代理 = select, DIRECT, PROXY, policy-path=, include-all-proxies=true, include-other-group=, policy-regex-filter=(🇸🇬|新加坡|Singapore|SG|🇭🇰|香港|HK)
 
 [General]
 force-http-engine-hosts = %APPEND% *.weixin.qq.com, *.wechat.com, *.tenpay.com
@@ -33,18 +40,18 @@ force-http-engine-hosts = %APPEND% *.weixin.qq.com, *.wechat.com, *.tenpay.com
 # 核心规则：新加坡/香港WeChat域名走新加坡节点
 # 这是解决"转圈"问题的关键
 # ============================================
-DOMAIN,sgminorshort.wechat.com,新加坡节点
-DOMAIN,sglong.wechat.com,新加坡节点
-DOMAIN,sgshort.wechat.com,新加坡节点
-DOMAIN,sgshort.pay.wechat.com,新加坡节点
-DOMAIN,sgaxshort.wechat.com,新加坡节点
-DOMAIN,sgfindershort.wechat.com,新加坡节点
-DOMAIN-SUFFIX,support.wechat.com,新加坡节点
-DOMAIN-SUFFIX,wechatos.net,新加坡节点
+DOMAIN,sgminorshort.wechat.com,WeChat代理
+DOMAIN,sglong.wechat.com,WeChat代理
+DOMAIN,sgshort.wechat.com,WeChat代理
+DOMAIN,sgshort.pay.wechat.com,WeChat代理
+DOMAIN,sgaxshort.wechat.com,WeChat代理
+DOMAIN,sgfindershort.wechat.com,WeChat代理
+DOMAIN-SUFFIX,support.wechat.com,WeChat代理
+DOMAIN-SUFFIX,wechatos.net,WeChat代理
 
 # 香港WeChat域名也走新加坡节点
-DOMAIN,hk.wechat.com,新加坡节点
-DOMAIN-SUFFIX,hkshort.wechat.com,新加坡节点
+DOMAIN,hk.wechat.com,WeChat代理
+DOMAIN-SUFFIX,hkshort.wechat.com,WeChat代理
 
 # ============================================
 # 广告过滤
@@ -161,14 +168,14 @@ DOMAIN-KEYWORD,wxmini,DIRECT
 
 # User-Agent 规则
 USER-AGENT,MicroMessenger*,DIRECT
-USER-AGENT,WeChat*,新加坡节点
+USER-AGENT,WeChat*,WeChat代理
 
 # ============================================
 # IP网段规则
 # ============================================
 # 新加坡节点（代理）
-IP-CIDR,43.160.144.0/20,新加坡节点,no-resolve
-IP-CIDR,54.254.0.0/16,新加坡节点,no-resolve
+IP-CIDR,43.160.144.0/20,WeChat代理,no-resolve
+IP-CIDR,54.254.0.0/16,WeChat代理,no-resolve
 
 # 中国内地网段（直连）
 IP-CIDR,101.32.104.0/24,DIRECT,no-resolve
@@ -183,7 +190,7 @@ IP-CIDR6,2409:8C1E:8FD0::/56,DIRECT,no-resolve
 IP-CIDR6,240E:E1:A900::/48,DIRECT,no-resolve
 
 # ASN规则
-IP-ASN,132203,新加坡节点,no-resolve
+IP-ASN,132203,WeChat代理,no-resolve
 
 [URL Rewrite]
 # 交通银行小程序开屏广告

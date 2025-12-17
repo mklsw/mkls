@@ -192,17 +192,5 @@ IP-CIDR6,240E:E1:A900::/48,DIRECT,no-resolve
 # ASN规则
 IP-ASN,132203,WeChat代理,no-resolve
 
-[URL Rewrite]
-# 交通银行小程序开屏广告
-^https:\/\/creditcardapp\.bankcomm\.com\/cnsvPmpaMdbcardWeb\/page\/getGuidePageAds - reject
-# 招行首页横幅广告
-^https:\/\/mbmodule-openapi\.paas\.cmbchina\.com\/graphic\/v2\/module\/graphic - reject
-# 公众号推广内容
-^https:\/\/mp\.weixin\.qq\.com\/mp\/(cps_product_info|getappmsgad|jsmonitor|masonryfeed|relatedarticle)\? - reject-dict
-
-[Script]
-# 微信外部链接解锁
-http-response ^https\:\/\/(weixin110\.qq|security.wechat)\.com\/cgi-bin\/mmspamsupport-bin\/newredirectconfirmcgi\? script-path=https://kelee.one/Resource/Script/Weixin/Weixin_external_links_unlock.js, requires-body=true, tag=微信外部链接解锁
-
 [MITM]
 hostname = %APPEND% weixin110.qq.com, security.wechat.com, mp.weixin.qq.com, *.weixin.qq.com, *.wechat.com

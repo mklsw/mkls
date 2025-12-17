@@ -1,4 +1,4 @@
-#!name=WeChat国际版优化
+#!name=WeChat国际版大陆使用优化
 #!desc=解决WeChat新加坡账号在中国大陆使用转圈/缓慢问题，含DNS优化、广告过滤、外部链接解锁
 #!author=junwu
 #!icon=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Weixin.png
@@ -15,8 +15,8 @@
 # ============================================
 
 [Proxy Group]
-# 用户可选择的WeChat代理策略组
-WeChat代理 = select, DIRECT, PROXY, policy-path=, include-all-proxies=true, include-other-group=, policy-regex-filter=(🇸🇬|新加坡|Singapore|SG|🇭🇰|香港|HK)
+# 用户可选择的WeChat代理策略组（显示所有节点供选择）
+WeChat代理 = select, DIRECT, PROXY, include-all-proxies=true
 
 [General]
 force-http-engine-hosts = %APPEND% *.weixin.qq.com, *.wechat.com, *.tenpay.com
